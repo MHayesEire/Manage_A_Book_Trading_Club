@@ -1,0 +1,211 @@
+<!-- views/pages/books.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>BOOKS - <%=title %></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/stylecss.css">       
+<script type="text/javascript" src="/javascripts/jsfile.js"></script>
+<!--  <script type="text/javascript" src="/javascripts/ajax.js"></script>     -->
+<!-- iconj.com favicon code -->
+<link rel="shortcut icon" href="http://www.iconj.com/icon.php?pid=77nzl08q5u" type="image/x-icon" />
+<link rel="shortcut icon" href="http://www.iconj.com/gif_icon.php?pid=77nzl08q5u" type="image/gif" /> 
+<!-- end of iconj.com favicon code -->   
+</head>
+<body>
+<div class="container">
+        
+<div class="col-sm-11 col-sm-offset-1">
+        <a href="/" class="btn btn-default"><span class="glyphicon glyphicon-home"></span> Home </a>
+        <a href="/books" class="btn btn-default"><span class="glyphicon glyphicon-book"></span> View All Books </a>
+        <a href="/acSettings" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> Update Accounts </a>  
+        <a href="/mybooks" class="btn btn-default"><span class="glyphicon glyphicon-bookmark"></span> View My Books </a>        
+        <a href="/logout" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-off"></span> Logout </a>  
+        <br /> <br />
+<% if(total[0] != undefined ) {%>
+<button class="btntradeyou btn btn-success">Your trade requests (<%= total[0].count %> outstanding)</button>    
+<% 
+}else{
+%>
+<button class="btntradeyou btn btn-success">Your trade requests (0 outstanding)</button>  
+<% 
+}
+%>
+<% if(trades[0] != undefined ) {%>
+<button class="btntradeother btn btn-primary">Trade requests for you (<%= trades[0].count %> unapproved)</button>
+<% 
+}else{
+%>
+<button class="btntradeother btn btn-primary">Trade requests for you (0 unapproved)</button>
+<% 
+}
+%>
+    <div class="page-header text-center">
+    <%if (error =="") { %>
+<% }else{ %>
+<h2><b style="color: red;"><%=error %></b></h2>
+<% } %>    
+<!--
+<ul>
+  <pre>TRADES:  <%- JSON.stringify(trades) %> </pre>
+</ul>
+<ul>
+  <pre>TRADES WISHES:  <%- JSON.stringify(tradewishes) %> </pre>
+</ul>
+<!--
+<ul>
+  <pre> <%- JSON.stringify(wishes) %> </pre>
+</ul>
+-->
+<div class="trade1" id="bookList">
+            <% for(var i=0; i< wishes.length; i++) {%>
+           
+<hr><%= wishes[i].book %>
+<!-- Accept book trade user -->
+<form action="/acceptbook" method="post">
+    <input type="hidden" name="book" value="<%= wishes[i].book %>">
+    <input type="hidden" name="bookid" value="<%= wishes[i].bookid %>">
+    <input type="hidden" name="buyer" value="<%= wishes[i].userid %>">    
+    <input type="hidden" name="owner" value="<%= wishes[i].owner %>">  
+    <input type="hidden" name="wish" value="<%= wishes[i].wish %>">
+    <input type="hidden" name="id" value="<%= wishes[i]._id %>">    
+<%
+if(wishes[i].wish === "waiting")
+{
+%>
+<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-time"></span><b> Please Confirm? </b></button>
+<% 
+}
+else if(wishes[i].wish === true)
+{
+%>
+<button type="submit" class="btn btn-success disabled"><span class="glyphicon glyphicon-time"></span><b> Wait For Response </b></button>
+<% 
+}else{
+%>
+<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span><b> Accept </b></button>
+<% 
+}
+%>
+</form>
+<!-- Accept book trade user END -->
+
+<form action="/delwish" method="post">
+    <input type="hidden" name="book" value="<%= wishes[i].book %>">
+    <input type="hidden" name="bookid" value="<%= wishes[i].bookid %>">
+    <input type="hidden" name="userid" value="<%= wishes[i].userid %>">    
+    <input type="hidden" name="id" value="<%= wishes[i]._id %>">    
+    <input type="hidden" name="owner" value="<%= wishes[i].owner %>">     
+<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span><b> Cancel </b></button>
+
+     </form>
+     <hr>
+<% 
+}
+%>
+</div>
+        <div class="trade2" id="bookList2">
+            <% for(var i=0; i< tradewishes.length; i++) {%>
+<hr><%= tradewishes[i].book %> 
+<!-- Accept trade -->
+<form action="/accepttrade" method="post">
+    <input type="hidden" name="book" value="<%= tradewishes[i].book %>">
+    <input type="hidden" name="bookid" value="<%= tradewishes[i].bookid %>">
+    <input type="hidden" name="buyer" value="<%= tradewishes[i].userid %>">    
+    <input type="hidden" name="owner" value="<%= tradewishes[i].owner %>">  
+    <input type="hidden" name="wish" value="<%= tradewishes[i].wish %>">
+    <input type="hidden" name="id" value="<%= tradewishes[i]._id %>">    
+
+<% if(tradewishes[i].wish === "pending" ) {
+%>
+<button type="submit" class="btn btn-success disabled"><span class="glyphicon glyphicon-refresh"></span><b> <%= tradewishes[i].wish %> </b></button>
+<% 
+}
+else if(tradewishes[i].wish === "waiting")
+{
+%>
+<button type="submit" class="btn btn-success disabled"><span class="glyphicon glyphicon-time"></span><b> <%= tradewishes[i].wish %>  </b></button>
+<% }
+else if(tradewishes[i].wish === "deleted")
+{
+%>
+<button type="submit" class="btn btn-success disabled"><span class="glyphicon glyphicon-time"></span><b> <%= tradewishes[i].wish %>  </b></button>
+<% 
+}else{
+%>
+<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span><b> Accept </b></button>
+<% 
+}
+%>
+</form>
+<!-- Delete trade -->
+<form action="/deltrade" method="post">
+    <input type="hidden" name="book" value="<%= tradewishes[i].book %>">
+    <input type="hidden" name="bookid" value="<%= tradewishes[i].bookid %>">
+    <input type="hidden" name="wish" value="<%= tradewishes[i].wish %>">  
+    <input type="hidden" name="buyer" value="<%= tradewishes[i].userid %>">    
+    <input type="hidden" name="owner" value="<%= tradewishes[i].owner %>">    
+    <input type="hidden" name="id" value="<%= tradewishes[i]._id %>">           
+<%
+if(tradewishes[i].wish === "deleted")
+{
+%>
+<button type="submit" class="btn btn-danger disabled"><span class="glyphicon glyphicon-remove"></span><b>  Cancel </b></button>
+<% 
+}else{
+%>
+<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span><b>  Cancel </b></button>
+<% 
+}
+%>    
+     </form>  <hr>
+<% 
+}
+%>
+</div>        
+        <h1>  All Books</h1>
+    </div>
+        <div class="col-sm-12">
+            <div class="well">
+<!--                
+<ul>
+  <pre> <%- JSON.stringify(total) %> 
+  <%= total %>
+  </pre>
+</ul>
+<ul>
+  <pre> <%- JSON.stringify(books) %> </pre>
+</ul>
+-->
+<ul>
+<% for(var i=0; i< books.length; i++) {%>
+    <!--<button class="btn btn-success"><a href="/wishlistAdd" class="btn btn-default btn-sm">
+  <img src="<%= books[i].image %>" alt="<%= books[i].book %>" title="ADD TO WISH LIST - <%= books[i].book %>"/>
+  </a> ADD </button>-->
+<form action="/wishlistAdd" method="post">
+    <input type="hidden" name="book" value="<%= books[i].book %>">
+    <input type="hidden" name="image" value="<%= books[i].image %>">   
+    <input type="hidden" name="bookid" value="<%= books[i].bookid %>">  
+    <input type="hidden" name="userid" value="<%= books[i].userid %>">
+<button type="submit"><img src="<%= books[i].image %>" alt="<%= books[i].book %>" title="ADD TO WISH LIST - <%= books[i].book %>"/><b> Add </b></button>
+     </form>  
+<% 
+}
+%>
+</ul>    
+  
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!-- views/pages/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Signup - <%=title %></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/stylecss.css">       
+<script type="text/javascript" src="/javascripts/jsfile.js"></script>
+<!--  <script type="text/javascript" src="/javascripts/ajax.js"></script>     -->
+<!-- iconj.com favicon code -->
+<link rel="shortcut icon" href="http://www.iconj.com/icon.php?pid=77nzl08q5u" type="image/x-icon" />
+<link rel="shortcut icon" href="http://www.iconj.com/gif_icon.php?pid=77nzl08q5u" type="image/gif" /> 
+<!-- end of iconj.com favicon code -->   
+</head>
+<body>
+<div class="container">
+<div class="col-sm-6 col-sm-offset-3">
+        <a href="/" class="btn btn-default"><span class="glyphicon glyphicon-home"></span> Home </a>
+        <br /> <br />
+<div class="col-sm-6 col-sm-offset-3">
+    <h1> Signup</h1>
+    <!-- SIGNUP FORM -->
+    <form action="/signup" method="post">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="uname">
+        </div>        
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" name="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg"> Signup </button>
+    </form>
+
+    <hr>
+
+    <p>Already have an account? <a href="/login">Login</a></p>
+    <p>Or go to <a href="/">Homepage</a>.</p>
+
+</div>
+<ul>
+<%if (error =="") { %>
+
+<% }else{ %>
+<li><b style="color: red;"><%=error %></b></li>
+<% } %>
+</ul>
+</div>
+</div>
+</body>
+</html>

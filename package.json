@@ -1,0 +1,26 @@
+{
+  "name": "ManageABookTradingClub",
+  "version": "0.0.9",
+  "description": "Build a Book Trading Club App",
+  "main": "server.js",
+  "repository": "https://github.com/MHayesEire/Manage_A_Book_Trading_Club.git",
+  "author": "Martin Hayes",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "body-parser": "~1.0.0",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.4.2",
+    "email-validator": "^1.0.4",
+    "express": "~4.0.0",
+    "express-session": "^1.14.0",
+    "google-books-search": "^0.3.0",
+    "google-books-search-2": "^0.3.0",
+    "method-override": "~1.0.0",
+    "mongodb": "2.1.4",
+    "morgan": "^1.0.1"
+  },
+  "engines": {
+    "node": "4.4.5",
+    "npm": "2.15.5"
+  }
+}

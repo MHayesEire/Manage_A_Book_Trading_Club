@@ -1,0 +1,65 @@
+<!-- views/pages/booksearch.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Book Search - <%=title %></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/stylecss.css">       
+<script type="text/javascript" src="/javascripts/jsfile.js"></script>
+<!--  <script type="text/javascript" src="/javascripts/ajax.js"></script>     -->
+<!-- iconj.com favicon code -->
+<link rel="shortcut icon" href="http://www.iconj.com/icon.php?pid=77nzl08q5u" type="image/x-icon" />
+<link rel="shortcut icon" href="http://www.iconj.com/gif_icon.php?pid=77nzl08q5u" type="image/gif" /> 
+<!-- end of iconj.com favicon code -->   
+</head>
+<body>
+<div class="container">
+<div class="col-sm-11 col-sm-offset-1">
+        <a href="/" class="btn btn-default"><span class="glyphicon glyphicon-home"></span> Home </a>
+        <a href="/books" class="btn btn-default"><span class="glyphicon glyphicon-book"></span> View All Books </a>
+        <a href="/acSettings" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> Update Accounts </a>  
+        <a href="/mybooks" class="btn btn-default"><span class="glyphicon glyphicon-bookmark"></span> View My Books </a>        
+        <a href="/logout" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-off"></span> Logout </a>  
+        <br /> <br />        
+    <div class="page-header text-center">
+        <h1><span class="glyphicon glyphicon-user"></span> My Book Search Results: </h1>
+    </div>
+        <div class="col-sm-12">
+            <div class="well">
+<ul>
+ <!-- B  <pre> <%- JSON.stringify(books) %> </pre> -->
+</ul>
+    <!-- BOOK SEARCH FORM -->
+    <form action="/booksearchForm" method="post" onsubmit="return validateForm3()" id="form3">
+        <div class="form-group">
+            <label>Title: </label>
+            <input type="text" class="form-control" name="book" id="book1">
+        </div>
+        <button type="submit" id="btnBook" class="btn btn-success btn-lg">Search Add</button>
+    </form>
+
+    <hr>
+<% for(var i=0; i< books.length; i++) {%>
+<form action="/addbook" method="post">
+    <input type="hidden" name="book" value="<%= books[i].title %>">
+    <input type="hidden" name="imagethumb" value="<%= books[i].thumbnail %>">
+  <button type="submit"><img src="<%= books[i].thumbnail %>" alt="<%= books[i].title %>" title="ADD BOOK - <%= books[i].title %>"/><b> Add </b></button>
+     </form>
+<% 
+}
+%>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+</body>
+</html>
